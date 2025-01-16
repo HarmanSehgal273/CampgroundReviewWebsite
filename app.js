@@ -16,7 +16,7 @@ const passport = require('passport');
 const User = require('./models/user');
 const LocalStrategy = require('passport-local')
 const helmet = require('helmet');
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL || 'mongodb://0.0.0.0:27017/yelp-camp';
 //const dbUrl = 'mongodb://0.0.0.0:27017/yelp-camp'
 const campgroundRoutes = require('./routes/campgrounds')
 const reviewRoutes = require('./routes/reviews');
@@ -189,6 +189,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render('error', { err });
 })
 
-app.listen(3000, () => {
-    console.log('Listening to port 3000')
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 })

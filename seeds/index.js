@@ -1,10 +1,18 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
 const mongoose = require('mongoose');
 const Campground = require('../models/campground');
 const { places, descriptors } = require('./seedHelpers');
-const cities = require('./cities')
+const cities = require('./cities');
+const dbUrl = process.env.DB_URL || 'mongodb://0.0.0.0:27017/yelp-camp';
 
-
-mongoose.connect('mongodb://localhost:27017/yelp-camp', {
+const express = require('express');
+const session = require('express-session')
+const mongoSanitize = require('express-mongo-sanitize');
+const MongoDBStore = require('connect-mongo')(session);
+//mongodb+srv://user_2703:e6dLaN-9!8N.M7h@cluster0.0tpoe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -12,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/yelp-camp', {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
-    console.log("Database connected");
+    console.log("Database connected" + dbUrl);
 });
 
 const sample = array => array[Math.floor(Math.random() * array.length)];
@@ -23,7 +31,7 @@ const seedDB = async() => {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 30) + 10;
         const camp = new Campground({
-            author: '67862fc281e57461fcb92845',
+            author: '6788ec0fa4f259221774d455',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             geometry: {
