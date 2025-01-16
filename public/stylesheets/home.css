@@ -34,3 +34,9 @@ body {
     color: #333;
     text-shadow: none;
 }
+
+@media screen and (max-width: 601px) {
+    #ptext {
+        font-size: 10px;
+    }
+}

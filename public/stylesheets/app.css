@@ -7,3 +7,21 @@
     width: 100%;
     height: 300px;
 }
+
+
+/* @media (min-width: 600px) {
+    .qwerty {
+        flex-direction: column;
+    }
+} */
+
+@media screen and (max-width: 601px) {
+    #cluster-map {
+        width: 100%;
+        height: 250px;
+    }
+    #map {
+        width: 100%;
+        height: 200px;
+    }
+}
